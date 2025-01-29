@@ -38,7 +38,7 @@ let tags = [];
 
 function init(){
 
-	data.learn.values.forEach(function(row) {
+	data.learn.forEach(function(row) {
 		let tagList = row[6].split(',');
 		tagList.forEach(function(tag) {
 			tags.push(tag.trim());

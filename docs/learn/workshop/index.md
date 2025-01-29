@@ -1,15 +1,18 @@
-<h1 id="title"></h1>
+<h1 id="title">workshop...</h1>
 <span id="secondary-title"></span>
 <div id="workshop-container"></div>
 
 
 <script>
+	
 // ---------------------------- //
 //                            	//
 //	  Function to get URL    	//
 //                            	//
 // ---------------------------- //
 function init(){
+	console.log("in workshop index...")
+	console.log(data)
 	// Get URL parameters
 	var params = getUrlParams();
 	
@@ -29,15 +32,17 @@ function init(){
 	
 function createWorkshop(id) {
 	// find the workshop in the workshops array
-	let workshop = data.learn.values[id];
+	let workshop = data.learn[id];
 	// add the title
 	// get the h1 element title
 	let title = document.getElementById('title');
 	title.innerHTML = workshop[0];
+	title.tabIndex = 0;
 
 	// add secondary title
 	let secondaryTitle = document.getElementById('secondary-title');
 	secondaryTitle.innerHTML = workshop[1];
+	secondaryTitle.tabIndex = 0;
 
 	// create a div for the workshop
 	let workshopDiv = document.createElement('div');
@@ -49,6 +54,7 @@ function createWorkshop(id) {
 	// add alt and title tags
 	video.alt = workshop[1];
 	video.title = workshop[1];
+	video.tabIndex = 0;
 	
 	workshopDiv.appendChild(video);
 
@@ -57,12 +63,14 @@ function createWorkshop(id) {
 		let link = document.createElement('a');
 		link.href = workshop[5];
 		link.innerHTML = "Watch on YouTube";
+		link.tabIndex = 0;
 		workshopDiv.appendChild(link);
 	}	
 
 	// add the description
 	let description = document.createElement('p');
 	description.innerHTML = workshop[3];
+	description.tabIndex = 0;
 	workshopDiv.appendChild(description);
 
 	// add the tags
@@ -73,6 +81,7 @@ function createWorkshop(id) {
 		let tagDiv = document.createElement('div');
 		tagDiv.className = 'tag';
 		tagDiv.innerHTML = tag.trim();
+		tagDiv.tabIndex = 0;
 		tagContainer.appendChild(tagDiv);
 	});
 	workshopDiv.appendChild(tagContainer);

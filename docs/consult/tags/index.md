@@ -38,7 +38,7 @@ let tags = [];
 
 function init(){
 
-	data[section].values.forEach(function(row) {
+	data[section].forEach(function(row) {
 		// if row is not undefined
 		if (row[6] != undefined) {
 			let tagList = row[6].split(',');

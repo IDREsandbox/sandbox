@@ -38,7 +38,7 @@ let tags = [];
 
 function init(){
 
-	data.musings.values.forEach(function(row) {
+	data.musings.forEach(function(row) {
 		let tagList = row[6].split(',');
 		tagList.forEach(function(tag) {
 			tags.push(tag.trim());

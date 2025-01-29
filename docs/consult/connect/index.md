@@ -5,25 +5,24 @@ title:  "Connect with OARC Sandbox Research Team | UCLA Technology Sandbox"
 description: "Meet the interdisciplinary research team behind UCLA's Technology Sandbox. Learn how to collaborate, access our innovative computing facility, and engage with OARC's experts in digital scholarship."
 ---
 
-
-<h1 id="title">Connect</h1>
+<h1 id="title" tabindex="0">Connect</h1>
 
 <!-- add a search box -->
-<input type="text" id="search" class="search" onkeyup="search()" placeholder="Search for people..">
+<input type="text" id="search" class="search" onkeyup="search()" placeholder="Search for people.." tabindex="0">
 
 <!-- two buttons to toggle between gallery view and tag view -->
 <span class="btn btn-on" tabindex="0" alt="gallery view" title="gallery view">
 	gallery view
 </span>
-<span class="btn btn-off" tabindex="0" alt="tab view" title="tab view" onclick="window.location.href = 'tags'" onkeydown="if(event.keyCode === 13) { window.location.href = 'tags' }">
+<span class="btn btn-off" tabindex="0" alt="tab view" title="tab view" onclick="window.location.href = 'tags'" onkeydown="if(event.keyCode === 13) { window.location.href = 'tags' }" tabindex="0">
 	tag view
 </span>
 
-<h2>Current</h2>
-<div class="gallery-current"></div>
+<h2 tabindex="0">Current</h2>
+<div class="gallery-current" tabindex="0"></div>
 
-<h2>Past</h2>
-<div class="gallery-past"></div><hr>
+<h2 tabindex="0">Past</h2>
+<div class="gallery-past" tabindex="0"></div><hr>
 <!-- <div class="gallery"></div>  -->
 
 <script>
@@ -66,7 +65,7 @@ function init(){
 	let tag = urlParams.get('tag');
 	if (tag) {
 		console.log('tag found');
-		data[section].values.forEach(function(row) {
+		data[section].forEach(function(row) {
 			let status = row[2];
 			let tags = row[6].split(',');
 			if (tags.map(function(x) { return x.trim() }).includes(tag)) {
@@ -84,7 +83,7 @@ function init(){
 		
 	} else {
 		console.log('no tag found');
-		data[section].values.forEach(function(row) {
+		data[section].forEach(function(row) {
 			let status = row[2];
 			if (status == 'staff') {
 				addGalleryItem(row,counter,'.gallery-current')

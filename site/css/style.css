@@ -250,7 +250,8 @@ small {
 .tag {
     font-size: 0.5rem !important;
     line-height: 1.2;
-    background-color: gray;
+    /* background-color: gray; */
+    background-color: #595959;
     padding: 5px;
     font-size: 0.6rem;
     border-radius: 4px;
@@ -280,7 +281,8 @@ small {
     height: 100px; /* Adjust height as needed */
     /* border: 1px solid black; Just for visualization */
     border-radius: 50%; /* Makes the box circular */
-    background-color: gray;
+    /* background-color: gray; */
+    background-color: #595959;
     color: white;
     font-size: 0.6rem;
     box-shadow: 0 0 2px rgba(0, 0, 0, 0.3);

@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+	<!-- redirect after 1 second and fade out -->
+	<!-- <meta http-equiv="refresh" content="1; url=learn/" /> -->
+
+	<style>
+		body {
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+			height: 100vh;
+			margin: 0;
+			background-color: #f3f3f3;
+			font-family: Arial, sans-serif;
+		}
+
+		.sign {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			text-align: center;
+			width: 160px;
+			height: 40px;
+			background-color: black;
+			color: white;
+			padding: 10px;
+			box-sizing: border-box;
+			margin-bottom: 10px;
+			font-size: 0.8rem;
+		}
+
+		.sign .room {
+			font-size: 0.6rem;
+		}
+
+		.door {
+			position: relative;
+			width: 320px;
+			height: 400px;
+			/* background-color: red; */
+			background-color: #a10000;
+			cursor: pointer;
+		}
+
+		.door::before {
+			content: "";
+			position: absolute;
+			top: 0;
+			left: 50%;
+			width: 4px;
+			height: 100%;
+			background-color: white;
+		}
+
+		.door::after {
+			content: "";
+			position: absolute;
+			right: 130px;
+			top: 50%;
+			width: 15px;
+			height: 40px;
+			background-color: silver;
+			cursor: pointer;
+			/* border-radius: 50%; */
+		}
+
+		.title {
+			position: absolute;
+			top: 20px;
+			left: 10px;
+			font-size: 35px;
+			font-weight: bold;
+			writing-mode: vertical-lr; /* Vertical writing from bottom to top */
+			transform: rotate(180deg); 
+			opacity: 0.7;
+		}
+
+		.handscan {
+			position: relative;
+			left: 200px;
+			top: -200px;
+			width: 40px;
+			height: 100px;
+			background-color: black;
+			transform: translateY(-50%);
+			cursor: pointer;
+			color: white;
+			text-align: center;
+			font-family: 'Courier New', Courier, monospace;
+		}
+		.dial {
+			font-size: 0.6rem;
+			line-height: 0.4rem;
+			margin-bottom: -10px;
+			/* narrow the space between lines */
+			
+		}
+
+		body {
+			transition: opacity 1s ease-out;
+		}
+		.fade-out {
+			opacity: 0;
+		}
+
+	</style>
+	<script>
+		function handleScanClick() {
+			var code = prompt("Enter your 4 digit code");
+			if (code == "4328") {
+				// pass an argument that they went through the door
+				window.location.href = 'work?gamified=1';
+			} else {
+				alert("Wrong passcode");
+			}
+		}
+
+		document.addEventListener("DOMContentLoaded", function() {
+			setTimeout(function() {
+				document.body.classList.add('fade-out');
+			}, 1000); // Wait for 1 second before starting the fade out
+
+			setTimeout(function() {
+				window.location.href = 'learn/';
+			}, 2000); // Redirect after the fade out (total 2 seconds)
+		});
+	</script>
+
+
+
+
+
+
+
+</head>
+<body>
+	<div class="sign">
+		<div>Technology Sandbox</div>
+		<div class="room">Room 4328</div>
+	</div>
+	
+
+
+	<div class="door" onclick="window.location.href='learn'">
+		<div class="title">Sandbox</div>
+	</div>
+	<div class="handscan" onclick="window.location.href='learn'">
+	<!-- <div class="handscan" onclick="handleScanClick()"> -->
+			<span class="dial">1 2 3 4 5 6 7 8 9 * 0 #</span>
+		<br>
+
+		🤚🏻
+	</div>
+</body>
+</html>

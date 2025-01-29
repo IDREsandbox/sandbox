@@ -17,142 +17,140 @@
 			font-family: Arial, sans-serif;
 		}
 
-		.sign {
-			display: flex;
-			justify-content: space-between;
-			align-items: center;
-			text-align: center;
-			width: 160px;
-			height: 40px;
-			background-color: black;
-			color: white;
-			padding: 10px;
-			box-sizing: border-box;
-			margin-bottom: 10px;
-			font-size: 0.8rem;
+		html, body {
+			margin: 0;
+			padding: 0;
+			width: 100%;
+			height: 100%;
+			overflow: hidden; /* Hide scrollbars if you like */
 		}
-
-		.sign .room {
-			font-size: 0.6rem;
-		}
-
-		.door {
+		.body-background {
+			width: 100%;
+			height: 100%;
+			background-size: cover;
+			background-position: center;
+			background-repeat: no-repeat;
 			position: relative;
-			width: 320px;
-			height: 400px;
-			/* background-color: red; */
-			background-color: #a10000;
-			cursor: pointer;
 		}
 
-		.door::before {
-			content: "";
+		.body-background::after {
+			content: '';
 			position: absolute;
 			top: 0;
-			left: 50%;
-			width: 4px;
+			left: 0;
+			width: 100%;
 			height: 100%;
-			background-color: white;
+			background-color: rgba(0, 0, 0, 0.6); /* Adjust the opacity as needed */
+			z-index: 1;
 		}
 
-		.door::after {
-			content: "";
-			position: absolute;
-			right: 130px;
-			top: 50%;
-			width: 15px;
-			height: 40px;
-			background-color: silver;
-			cursor: pointer;
-			/* border-radius: 50%; */
-		}
-
-		.title {
-			position: absolute;
-			top: 20px;
-			left: 10px;
-			font-size: 35px;
-			font-weight: bold;
-			writing-mode: vertical-lr; /* Vertical writing from bottom to top */
-			transform: rotate(180deg); 
-			opacity: 0.7;
-		}
-
-		.handscan {
+		.page-content {
 			position: relative;
-			left: 200px;
-			top: -200px;
-			width: 40px;
-			height: 100px;
-			background-color: black;
-			transform: translateY(-50%);
-			cursor: pointer;
-			color: white;
-			text-align: center;
-			font-family: 'Courier New', Courier, monospace;
+			z-index: 2;
 		}
-		.dial {
-			font-size: 0.6rem;
-			line-height: 0.4rem;
-			margin-bottom: -10px;
-			/* narrow the space between lines */
-			
+		.page-content {
+			width: 100%;
+			height: 100%;
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: flex-end;
+			padding: 50px;
+			box-sizing: border-box;
 		}
+		.site-logo {
+			/* margin-top: 20px; */
 
-		body {
-			transition: opacity 1s ease-out;
 		}
-		.fade-out {
-			opacity: 0;
+		.tagline {
+			font-weight: bold;
+			font-size: 2rem;
+			color: white;
+			text-align: right;
+			text-shadow: 1px 1px 2px black;
+			text-align: right;
+			line-height: 1.5; /* Add this line to increase line spacing */
+		}
+		.paragraph {
+			color: white;
+			text-align: right;
+			max-width: 450px;
+			text-shadow: 1px 1px 2px black;
+			margin-left: auto; /* Add this line to push paragraph to the right */
+			line-height: 1.5; /* Add this line to increase line spacing */
+		}
+		.links {
+			margin-top: 20px;
+			text-align: right;
+		}
+		.links a {
+			margin-left: 10px;
+			text-decoration: none;
+			color: #ffcc00; /* Change link color */
+			font-weight: bold;
+			text-shadow: 1px 1px 2px black;
+		}
+		.links a:hover {
+			color: #ff6600; /* Change link color on hover */
 		}
 
 	</style>
+	<script src="js/prism.js"></script>
+	<script src="js/getdata.js"></script>
 	<script>
-		function handleScanClick() {
-			var code = prompt("Enter your 4 digit code");
-			if (code == "4328") {
-				// pass an argument that they went through the door
-				window.location.href = 'work?gamified=1';
-			} else {
-				alert("Wrong passcode");
-			}
+
+		function init() {
+
+				console.log('generating random background image');
+				let images = [];
+
+				if (data.work && data.work && data.work.length > 0) {
+					images = images.concat(data.work.map(row => ({ src: row[4], type: 'work' })));
+				}
+
+				if (data.learn && data.learn && data.learn.length > 0) {
+					images = images.concat(data.learn.map(row => ({ src: row[4], type: 'learn' })));
+				}
+
+				images = images.filter(image => image.src); // Remove any undefined or empty values
+
+				if (images.length === 0) {
+					console.warn('No valid "work" or "learn" sheet data found.');
+					return;
+				}
+
+				let randomIndex = Math.floor(Math.random() * images.length);
+				let image = images[randomIndex];
+				let imageUrl = (image.type === 'work' ? 'work/images/' : 'learn/images/') + image.src;
+				document.getElementById('bgContainer').style.backgroundImage = 
+					'url("' + imageUrl + '")';
 		}
-
-		document.addEventListener("DOMContentLoaded", function() {
-			setTimeout(function() {
-				document.body.classList.add('fade-out');
-			}, 1000); // Wait for 1 second before starting the fade out
-
-			setTimeout(function() {
-				window.location.href = 'learn/';
-			}, 2000); // Redirect after the fade out (total 2 seconds)
-		});
 	</script>
-
-
-
-
-
-
 
 </head>
 <body>
-	<div class="sign">
-		<div>Technology Sandbox</div>
-		<div class="room">Room 4328</div>
+	<div id="bgContainer" class="body-background">
+		<div class="page-content" >
+			<div class="site-logo">
+				<!-- Replace with actual logo image if available -->
+				<img src="logo.png" alt="UCLA Advanced Research Computing GIS and Visualization Logo" title="UCLA Advanced Research Computing GIS and Visualization Logo" height="50" tabindex="0">
+				<br>
+				<br>
+			</div>
+			<div>
+				<div class="tagline" tabindex="0">Bringing your research to life</div>
+				<p class="paragraph" tabindex="0">
+					The Technology Sandbox is a hub for collaboration, innovation, and solutions centered on cutting-edge tools and techniques. Enrich your research with interactive workshops, hands-on experimentation, and guidance from our team of academic data scientists proficient in a wide range of advanced technologies.
+				</p>
+			</div>
+			<div class="links" tabindex="0">
+				<a href="learn/" tabindex="0">Learn</a>
+				<a href="work/" tabindex="0">Work</a>
+				<a href="musings/" tabindex="0">Muse</a>
+				<a href="consult/" tabindex="0">Consult</a>
+			</div>
+		</div>
 	</div>
-	
 
-
-	<div class="door" onclick="window.location.href='learn'">
-		<div class="title">Sandbox</div>
-	</div>
-	<div class="handscan" onclick="window.location.href='learn'">
-	<!-- <div class="handscan" onclick="handleScanClick()"> -->
-			<span class="dial">1 2 3 4 5 6 7 8 9 * 0 #</span>
-		<br>
-
-		🤚🏻
-	</div>
 </body>
 </html>

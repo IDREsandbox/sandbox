@@ -1,65 +1,61 @@
 // -------------------------------------------- //
 // Parameters to be used in the page            //
 // -------------------------------------------- //
+console.log('Getting data...');
 
-const sheetNames = ['work', 'learn', 'consult','musings'];
+// may not need this, as we are fetching data from a json file
+// instead, use the getdata.py script to get the data from the Google Sheet
 const spreadsheetId = '1bQDVVO-R3tt99eR7ageBYu5XK8lnnlxHZLzJghYSLa0';
-const apiKey = 'AIzaSyAUi4KazffmDZV_dQUnMUKA1jJt4i0mqlU';
+const apiKey = 'AIzaSyAxlHpEwRMRcj5qobzddd2oN9FNjWAh0RY';
+
+// sections of the data
+const sheetNames = ['work', 'learn', 'consult','musings'];
+
 let data = {};
 
-// -------------------------------------------- //
-// Function to fetch data from a specific sheet //
-// -------------------------------------------- //
+// Determine the environment
+let environment;
+if (window.location.href.includes('github') && window.location.href.includes('site')) {
+    environment = 'git';
+} else if (window.location.href.includes('site')) {
+    environment = 'postbuild';
+} else {
+    environment = 'prebuild';
+}
 
-async function fetchData(sheetName) {
-	const url = `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}/values/${sheetName}?key=${apiKey}`;
+// Set the base URL based on the environment
+let baseUrl;
+if (environment === 'prebuild') {
+    baseUrl = '/';
+} else if (environment === 'git') {
+    const pathParts = window.location.pathname.split('/');
+    const repoName = pathParts[1] ? `/${pathParts[1]}` : '';
+    baseUrl = `${window.location.origin}${repoName}/site/`;
+} else if (environment === 'postbuild') {
+    baseUrl = `${window.location.origin}/site/`;
+}
 
-	try {
-		const response = await fetch(url);
+console.log('Environment:', environment);
+console.log('Base URL:', baseUrl);
+
+// -------------------------------------------- //
+// Fetch data from the json file                //
+// -------------------------------------------- //
+fetch(`${baseUrl}js/sheets_data.json`)
+	.then(response => {
 		if (!response.ok) {
-			throw new Error('Failed to fetch data');
+			throw new Error(`HTTP error! Status: ${response.status}`);
 		}
-		const data = await response.json();
-		// get rid of first row 
-		data.values.shift();
-		return data;
-	} catch (error) {
-		console.error('Error fetching data:', error);
-		return null;
-	}
-}
-
-// -------------------------------------------- //
-// Function to check if data is                 //
-// fetched from all sheets                      //
-// -------------------------------------------- //
-async function checkAndInit() {
-	const promises = sheetNames.map(sheetName => fetchData(sheetName));
-	const results = await Promise.all(promises);
-
-	// Check if data is fetched from all sheets
-	const allDataFetched = results.every(result => result !== null);
-
-	if (allDataFetched) {
-		// put the data in an object
-		results.forEach((result, index) => {
-			data[sheetNames[index]] = result;
+		return response.json();
+	})
+	.then(gdata => {
+		// for each sheetname in SheetNames, add the data as an object to the data object
+		sheetNames.forEach(sheetName => {
+			data[sheetName] = gdata[sheetName];
 		});
-		console.log('Data object:', data);
-
-		// fun init function, located in each respective page
+		console.log('Successfully fetched data:', data);
 		init();
-		// After your Google Sheets data is loaded
-		document.dispatchEvent(new Event('dataLoaded'));
-	} else {
-		console.log('Failed to fetch data from one or more sheets.');
-	}
-}
-
-// -------------------------------------------- //
-// Let's get it rolling				            //
-// -------------------------------------------- //
-checkAndInit();
+	})
 
 // --------------------------------	//
 //                            		//

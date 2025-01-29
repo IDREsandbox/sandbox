@@ -177,6 +177,23 @@
         
   
   
+  
+    <li class="md-tabs__item">
+      <a href="../../musings/" class="md-tabs__link">
+        
+  
+    
+  
+  Muse
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
     
   
   
@@ -193,23 +210,6 @@
         </a>
       </li>
     
-  
-
-      
-        
-  
-  
-  
-    <li class="md-tabs__item">
-      <a href="../../musings/" class="md-tabs__link">
-        
-  
-    
-  
-  Musings
-
-      </a>
-    </li>
   
 
       
@@ -291,6 +291,26 @@
       
   
   
+  
+  
+    <li class="md-nav__item">
+      <a href="../../musings/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Muse
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
     
   
   
@@ -323,7 +343,7 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
         
           
           
@@ -339,14 +359,14 @@
             </a>
             
               
-              <label class="md-nav__link " for="__nav_3" id="__nav_3_label" tabindex="">
+              <label class="md-nav__link " for="__nav_4" id="__nav_4_label" tabindex="">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
           </div>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
-          <label class="md-nav__title" for="__nav_3">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
             <span class="md-nav__icon md-icon"></span>
             Consult
           </label>
@@ -411,26 +431,6 @@
   
 
     
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../musings/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Musings
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-    
   </ul>
 </nav>
                   </div>
@@ -464,22 +464,22 @@
                   
 
 
-<h1 id="title">Connect</h1>
+<h1 id="title" tabindex="0">Connect</h1>
 
 <!-- add a search box -->
-<p><input type="text" id="search" class="search" onkeyup="search()" placeholder="Search for people.."></p>
+<p><input type="text" id="search" class="search" onkeyup="search()" placeholder="Search for people.." tabindex="0"></p>
 <!-- two buttons to toggle between gallery view and tag view -->
 <p><span class="btn btn-on" tabindex="0" alt="gallery view" title="gallery view">
     gallery view
 </span>
-<span class="btn btn-off" tabindex="0" alt="tab view" title="tab view" onclick="window.location.href = 'tags'" onkeydown="if(event.keyCode === 13) { window.location.href = 'tags' }">
+<span class="btn btn-off" tabindex="0" alt="tab view" title="tab view" onclick="window.location.href = 'tags'" onkeydown="if(event.keyCode === 13) { window.location.href = 'tags' }" tabindex="0">
     tag view
 </span></p>
-<h2>Current</h2>
-<div class="gallery-current"></div>
+<h2 tabindex="0">Current</h2>
+<div class="gallery-current" tabindex="0"></div>
 
-<h2>Past</h2>
-<div class="gallery-past"></div>
+<h2 tabindex="0">Past</h2>
+<div class="gallery-past" tabindex="0"></div>
 <!-- <div class="gallery"></div>  -->
 
 <hr><script>
@@ -522,7 +522,7 @@ function init(){
     let tag = urlParams.get('tag');
     if (tag) {
         console.log('tag found');
-        data[section].values.forEach(function(row) {
+        data[section].forEach(function(row) {
             let status = row[2];
             let tags = row[6].split(',');
             if (tags.map(function(x) { return x.trim() }).includes(tag)) {
@@ -540,7 +540,7 @@ function init(){
 
     } else {
         console.log('no tag found');
-        data[section].values.forEach(function(row) {
+        data[section].forEach(function(row) {
             let status = row[2];
             if (status == 'staff') {
                 addGalleryItem(row,counter,'.gallery-current')
@@ -643,6 +643,8 @@ function init(){
         <script src="../../js/prism.js"></script>
       
         <script src="../../js/getdata.js"></script>
+      
+        <script src="../../js/sheets_data.json"></script>
       
     
   <script id="init-glightbox">const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});
