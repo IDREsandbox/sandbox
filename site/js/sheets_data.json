@@ -33,8 +33,7 @@
             "",
             "Francesca Albrezzi",
             "artificial intelligence, media art, digital art, exhibition, three-dimensional space",
-            "http://www.wikidata.org/entity/Q11660; http://www.wikidata.org/entity/Q118744998; http://www.wikidata.org/entity/Q860372; http://www.wikidata.org/entity/Q464980; http://www.wikidata.org/entity/Q34929",
-            "TRUE"
+            "http://www.wikidata.org/entity/Q11660; http://www.wikidata.org/entity/Q118744998; http://www.wikidata.org/entity/Q860372; http://www.wikidata.org/entity/Q464980; http://www.wikidata.org/entity/Q34929"
         ],
         [
             "XaViz",
@@ -85,7 +84,8 @@
             "",
             "Francesca Albrezzi",
             "art, academic, UCLA Fowler Museum of Cultural History",
-            "http://www.wikidata.org/entity/Q735; http://www.wikidata.org/entity/Q3400985; http://www.wikidata.org/entity/Q7864026"
+            "http://www.wikidata.org/entity/Q735; http://www.wikidata.org/entity/Q3400985; http://www.wikidata.org/entity/Q7864026",
+            "TRUE"
         ],
         [
             "Visual and Sonic Landscapes of Muslims in Los Angeles",
@@ -119,7 +119,8 @@
             "",
             "Francesca Albrezzi",
             "extended reality, photogrammetry, exhibition, 3D modeling, three-dimensional space, science, art, anatomy, history",
-            "http://www.wikidata.org/entity/Q25052165; http://www.wikidata.org/entity/Q190149; http://www.wikidata.org/entity/Q464980; http://www.wikidata.org/entity/Q568742; http://www.wikidata.org/entity/Q34929; http://www.wikidata.org/entity/Q336; http://www.wikidata.org/entity/Q735; http://www.wikidata.org/entity/Q514; http://www.wikidata.org/entity/Q309"
+            "http://www.wikidata.org/entity/Q25052165; http://www.wikidata.org/entity/Q190149; http://www.wikidata.org/entity/Q464980; http://www.wikidata.org/entity/Q568742; http://www.wikidata.org/entity/Q34929; http://www.wikidata.org/entity/Q336; http://www.wikidata.org/entity/Q735; http://www.wikidata.org/entity/Q514; http://www.wikidata.org/entity/Q309",
+            "TRUE"
         ],
         [
             "Classical Vietnamese Digital Encyclopedia",
@@ -244,7 +245,8 @@
             "International Image Interoperability Framework, digital library, digital image",
             "<iframe width=\"562\" height=\"382\" src=\"https://www.youtube.com/embed/N1ZuugRm04E\" title=\"Teaching &amp; Research w/ Digital Collections (Part3): Lessons and Learning Activity Design\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" allowfullscreen></iframe>",
             "International Image Interoperability Framework, digital library, digital image",
-            "http://www.wikidata.org/entity/Q22682088; http://www.wikidata.org/entity/Q212805; http://www.wikidata.org/entity/Q1250322"
+            "http://www.wikidata.org/entity/Q22682088; http://www.wikidata.org/entity/Q212805; http://www.wikidata.org/entity/Q1250322",
+            "TRUE"
         ],
         [
             "Introduction to Network Analysis Methodologies and Tools",
@@ -340,7 +342,8 @@
             "zoom, video equipment, lighting technique, camera techniques",
             "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/cBTRTQuRJjk?si=8S2Y3on035C8DCSF\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
             "Zoom, lighting technique",
-            "http://www.wikidata.org/entity/Q94979732; http://www.wikidata.org/entity/Q17177506"
+            "http://www.wikidata.org/entity/Q94979732; http://www.wikidata.org/entity/Q17177506",
+            "TRUE"
         ],
         [
             "NFTs: Getting Started in New Digital Markets",
@@ -484,7 +487,8 @@
             "podcast",
             "<iframe src=\"https://drive.google.com/file/d/1D7dSZfIfWn3UgU49cfR7uHuiphxak4C5/preview\" frameborder=\"0\" width=\"960\" height=\"569\" allowfullscreen=\"true\" mozallowfullscreen=\"true\" webkitallowfullscreen=\"true\"></iframe>",
             "podcast",
-            "http://www.wikidata.org/entity/Q20899"
+            "http://www.wikidata.org/entity/Q20899",
+            "TRUE"
         ],
         [
             "Use 360\u00b0 Photos to Create a \u201cTiny Planet\u201d",
