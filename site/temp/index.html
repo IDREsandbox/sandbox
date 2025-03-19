@@ -6,13 +6,9 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="Access a comprehensive library of workshops and tutorials from UCLA's OARC Sandbox. Enhance your skills in digital research, data analysis, and advanced computing techniques.">
       
       
       
-      
-      
-        <link rel="next" href="../work/">
       
       
       <link rel="icon" href="../assets/images/favicon.png">
@@ -20,7 +16,7 @@
     
     
       
-        <title>Learn with OARC Sandbox | UCLA Workshops and Tutorials - UCLA OARC Sandbox</title>
+        <title>Updating the Sandbox Website Data - UCLA OARC Sandbox</title>
       
     
     
@@ -82,6 +78,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#updating-the-sandbox-website-data" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -111,7 +112,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Learn with OARC Sandbox | UCLA Workshops and Tutorials
+              Updating the Sandbox Website Data
             
           </span>
         </div>
@@ -141,11 +142,9 @@
         
   
   
-    
   
-  
-    <li class="md-tabs__item md-tabs__item--active">
-      <a href="./" class="md-tabs__link">
+    <li class="md-tabs__item">
+      <a href="../learn/" class="md-tabs__link">
         
   
     
@@ -222,9 +221,7 @@
           
             
               
-                
-              
-              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" hidden>
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
                 <div class="md-sidebar__scrollwrap">
                   <div class="md-sidebar__inner">
                     
@@ -249,17 +246,10 @@
       
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../learn/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -268,7 +258,6 @@
   
 
       </a>
-      
     </li>
   
 
@@ -432,9 +421,7 @@
             
             
               
-                
-              
-              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" hidden>
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
                 <div class="md-sidebar__scrollwrap">
                   <div class="md-sidebar__inner">
                     
@@ -443,6 +430,70 @@
   
   
   
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-cloning-and-running-the-website-locally" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Cloning and Running the Website Locally
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-enter-data-into-the-google-sheet" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Enter Data into the Google Sheet
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-upload-the-corresponding-image-to-the-server" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Upload the Corresponding Image to the Server
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-mark-splashable-images" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. Mark Splashable Images
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-run-the-python-script-to-update-the-website-data" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. Run the Python Script to Update the Website Data
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-verify-the-changes-on-the-website" class="md-nav__link">
+    <span class="md-ellipsis">
+      6. Verify the Changes on the Website
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
   
 </nav>
                   </div>
@@ -457,94 +508,87 @@
                   
 
 
-<h1 id="title" tabindex="0">Learn</h1>
-<!-- add description -->
-<p id="description" tabindex="0">Access a comprehensive library of workshops and tutorials from UCLA's OARC Sandbox. Enhance your skills in digital research, data analysis, and advanced computing techniques.
-</p>
-
-<!-- add a search box -->
-<p><input type="text" id="search" class="search" onkeyup="search()" placeholder="Search projects.." tabindex="0"></p>
-<!-- two buttons to toggle between gallery view and tag view -->
-<p><span class="btn btn-on" tabindex="0" alt="gallery view" title="gallery view">
-    gallery view
-</span>
-<span class="btn btn-off" tabindex="0" alt="tab view" title="tab view" onclick="window.location.href = 'tags'" onkeydown="if(event.keyCode === 13) { window.location.href = 'tags' }">
-    tag view
-</span></p>
-<div class="gallery" tabindex="0"></div>
-
-<script>
-
-// -------------------------------- //
-//                                  //
-//    Initialize                    //
-//                                  //
-// -------------------------------- //
-
-let section = 'learn'
-
-function init(){
-    console.log(data)
-    // -------------------------------- //
-    // Loop through project data        //
-    // -------------------------------- //
-    counter = 0;
-
-    // filter data by tag, default is all
-    let tag = urlParams.get('tag');
-    if (tag) {
-        document.querySelector('.gallery').innerHTML = '';
-        data[section].forEach(function(row) {
-            let tags = row[6].split(',');
-            if (tags.map(function(x) { return x.trim() }).includes(tag)) {
-                addGalleryItem(row,counter);
-            }
-            counter++;
-        });
-        // add the name of the tag next to the search box with an option to clear the filter
-        // clear the filter by removing the tag from the url
-        document.querySelector('.search').insertAdjacentHTML('afterend',` <a href="?"><span class="tag tag-filter">${tag} x</span></a>`);
-
-    } else {
-
-        let shuffledData = data[section].sort(() => Math.random() - 0.5);
-        shuffledData.forEach(function(row) {
-            addGalleryItem(row, counter);
-            counter++;
-        });
-
-    }
-
-    // create the search function
-    window.search = function() {
-        let input, filter, ul, li, a, i, txtValue;
-        input = document.getElementById('search');
-        filter = input.value.toUpperCase();
-        li = document.querySelectorAll('.gallery-container');
-        for (i = 0; i < li.length; i++) {
-            a = li[i].getElementsByTagName('a')[0];
-
-            // search by project name, project description, and tags
-            let txtValue = a.textContent || a.innerText;
-            // search tags, which are in separate span tags of class tag
-            let tags = '';
-            li[i].querySelectorAll('.tag').forEach(function(tag) {
-                tags += tag.textContent;
-            });
-
-            if (txtValue.toUpperCase().indexOf(filter) > -1 || tags.toUpperCase().indexOf(filter) > -1) {
-                li[i].style.display = '';
-            } else {
-                li[i].style.display = 'none';
-            }
-
-        }
-    }   
-
-
-}
-
-</script>
+<h1 id="updating-the-sandbox-website-data"><strong>Updating the Sandbox Website Data</strong><a class="headerlink" href="#updating-the-sandbox-website-data" title="Permanent link">&para;</a></h1>
+<p>The Sandbox website is built on the <strong>MkDocs Material</strong> framework. MkDocs is a static site generator that creates documentation from Markdown files. The Material theme provides a modern, responsive UI for the site.</p>
+<p>For more details about MkDocs Material, visit:<br />
+🔗 <a href="https://squidfunk.github.io/mkdocs-material/">MkDocs Material Documentation</a></p>
+<p>The source code for the website is hosted on GitHub:<br />
+🔗 <a href="https://github.com/IDREsandbox/sandbox">GitHub Repository: IDREsandbox/sandbox</a></p>
+<hr />
+<h2 id="1-cloning-and-running-the-website-locally"><strong>1. Cloning and Running the Website Locally</strong><a class="headerlink" href="#1-cloning-and-running-the-website-locally" title="Permanent link">&para;</a></h2>
+<p>To work with the website, follow these steps:</p>
+<ol>
+<li>Clone the repository:
+   <div class="language-sh highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/IDREsandbox/sandbox.git
+</span></code></pre></div></li>
+<li>Navigate to the project folder:
+   <div class="language-sh highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="nb">cd</span><span class="w"> </span>sandbox
+</span></code></pre></div></li>
+<li>Use command-line tools to navigate to the <code>docs/</code> folder:
+   <div class="language-sh highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="nb">cd</span><span class="w"> </span>docs
+</span></code></pre></div></li>
+<li>Run the MkDocs development server to preview the site locally:
+   <div class="language-sh highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>mkdocs<span class="w"> </span>serve
+</span></code></pre></div>
+   This will start a local server at <code>http://127.0.0.1:8000/</code>, allowing you to preview the changes in real-time.</li>
+<li>Once satisfied, build the static site:
+   <div class="language-sh highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>mkdocs<span class="w"> </span>build
+</span></code></pre></div>
+   This generates the final version of the website in the <code>site/</code> folder.</li>
+</ol>
+<hr />
+<h2 id="2-enter-data-into-the-google-sheet"><strong>2. Enter Data into the Google Sheet</strong><a class="headerlink" href="#2-enter-data-into-the-google-sheet" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Open the Google Sheet:<br />
+<a href="https://docs.google.com/spreadsheets/d/1bQDVVO-R3tt99eR7ageBYu5XK8lnnlxHZLzJghYSLa0/edit?hl=en&amp;forcehl=1&amp;gid=1135922496#gid=1135922496">Sandbox Website Data</a>.</li>
+<li>The spreadsheet has separate tabs for different website sections:</li>
+<li><strong>Learn</strong></li>
+<li><strong>Work</strong></li>
+<li><strong>Consult</strong></li>
+<li><strong>Musings</strong></li>
+<li>Each sheet requires the following information for each entry:</li>
+<li><strong>Title</strong> – The title of the content.</li>
+<li><strong>Category</strong> – The section classification.</li>
+<li><strong>Description</strong> – A brief summary of the content.</li>
+<li><strong>Tags</strong> – Keywords that describe the entry.</li>
+<li><strong>Main Image</strong> – The filename of the corresponding image (without file path).</li>
+</ul>
+<hr />
+<h2 id="3-upload-the-corresponding-image-to-the-server"><strong>3. Upload the Corresponding Image to the Server</strong><a class="headerlink" href="#3-upload-the-corresponding-image-to-the-server" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Locate the image file corresponding to the filename entered in the <strong>Main Image</strong> column.</li>
+<li>Upload the image to the appropriate section folder on the server:</li>
+<li><code>docs/learn/images/</code></li>
+<li><code>docs/work/images/</code></li>
+<li><code>docs/consult/images/</code></li>
+<li><code>docs/musings/images/</code></li>
+<li>Ensure the image file is named <strong>exactly</strong> as entered in the spreadsheet to avoid broken links.</li>
+</ul>
+<hr />
+<h2 id="4-mark-splashable-images"><strong>4. Mark Splashable Images</strong><a class="headerlink" href="#4-mark-splashable-images" title="Permanent link">&para;</a></h2>
+<ul>
+<li>If an image is <strong>usable as a splash page image</strong>, set the <strong>"Splashable"</strong> column value to <strong>TRUE</strong>.</li>
+<li>This ensures the image can be randomly selected when a user visits the website.</li>
+</ul>
+<hr />
+<h2 id="5-run-the-python-script-to-update-the-website-data"><strong>5. Run the Python Script to Update the Website Data</strong><a class="headerlink" href="#5-run-the-python-script-to-update-the-website-data" title="Permanent link">&para;</a></h2>
+<ul>
+<li>After updating the Google Sheet, execute the Python script to generate a new JSON snapshot of the data.</li>
+<li>The script is located in:
+  <div class="language-sh highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>docs/js/getdata.py
+</span></code></pre></div></li>
+<li>Run the script using:
+  <div class="language-sh highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>python<span class="w"> </span>docs/js/getdata.py
+</span></code></pre></div></li>
+<li>Running this script ensures that the website reflects the latest changes.</li>
+</ul>
+<hr />
+<h2 id="6-verify-the-changes-on-the-website"><strong>6. Verify the Changes on the Website</strong><a class="headerlink" href="#6-verify-the-changes-on-the-website" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Refresh the website and confirm that the updated entries appear correctly.</li>
+<li>Check images, categories, and descriptions to ensure accuracy.</li>
+</ul>
+<p>By following these steps, the website data will be successfully updated with new content.</p>
 
 
 
@@ -552,13 +596,8 @@ function init(){
 
 
 
-  
-  
 
 
-
-
-  
 
 
 

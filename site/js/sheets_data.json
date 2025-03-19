@@ -15,7 +15,8 @@
             "FineArts1_Oct26.jpg,FineArts2_Oct26.jpg,StreetofCairo1_Oct26.jpg,Trans_01_May10.jpg,UST_WCE_6-scaled.jpg,VSim2_DemoImage_Dec2018.jpg,WCE_Agriculture_UCLA_Nov5_2015.jpg,WCE_Bridge_UCLA_Nov5_2015.jpg,WCE_Caravels_UCLA_Nov5_2015.jpg,WCE_ConventofLaRabida1_UCLA_Nov5_2015.jpg,WCE_FestivalHall_UCLA_Nov5_2015.jpg,WCE_FineArtsBldg_Int_UCLA_Nov5_2015.jpg,WCE_FineArtsBldg_UCLA_Nov5_2015.jpg,WCE_Horticulture_UCLA_Nov5_2015.jpg,WCE_Illinois_UCLA_Nov5_2015.jpg,WCE_LouisianaStateBldg_UCLA_Nov5_2015.jpg,WCE_MaineStateBldg_UCLA_Nov5_2015.jpg,WCE_Manufactures_UCLA_Nov5_2015.jpg,WCE_MassStateBldg_UCLA_Nov5_2015.jpg,WCE_RoseGarden_UCLA_Nov5_2015.jpg,WCE_WisconsinStateBldg_UCLA_Nov19_2015.jpg,WomansTerrace1_Oct26.jpg",
             "Lisa Snyder",
             "Chicago, Virtual learning environment, three-dimensional space, 3D computer graphics, spatial, history",
-            "http://www.wikidata.org/entity/Q1297; http://www.wikidata.org/entity/Q2349394; http://www.wikidata.org/entity/Q34929; http://www.wikidata.org/entity/Q189177; http://www.wikidata.org/entity/Q122075505; http://www.wikidata.org/entity/Q309"
+            "http://www.wikidata.org/entity/Q1297; http://www.wikidata.org/entity/Q2349394; http://www.wikidata.org/entity/Q34929; http://www.wikidata.org/entity/Q189177; http://www.wikidata.org/entity/Q122075505; http://www.wikidata.org/entity/Q309",
+            "TRUE"
         ],
         [
             "\u2018A Kind of Alchemy': The Work of Art in the Age of Artificial Intelligence (2023)",
@@ -32,7 +33,8 @@
             "",
             "Francesca Albrezzi",
             "artificial intelligence, media art, digital art, exhibition, three-dimensional space",
-            "http://www.wikidata.org/entity/Q11660; http://www.wikidata.org/entity/Q118744998; http://www.wikidata.org/entity/Q860372; http://www.wikidata.org/entity/Q464980; http://www.wikidata.org/entity/Q34929"
+            "http://www.wikidata.org/entity/Q11660; http://www.wikidata.org/entity/Q118744998; http://www.wikidata.org/entity/Q860372; http://www.wikidata.org/entity/Q464980; http://www.wikidata.org/entity/Q34929",
+            "TRUE"
         ],
         [
             "XaViz",
@@ -216,7 +218,8 @@
             "International Image Interoperability Framework, digital library, digital image",
             "<iframe width=\"562\" height=\"382\" src=\"https://www.youtube.com/embed/SuPGRmryCqI\" title=\"Teaching and Research w/ Digital Collections (Part 1)\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" allowfullscreen></iframe>",
             "International Image Interoperability Framework, digital library, digital image",
-            "http://www.wikidata.org/entity/Q22682088; http://www.wikidata.org/entity/Q212805; http://www.wikidata.org/entity/Q1250322"
+            "http://www.wikidata.org/entity/Q22682088; http://www.wikidata.org/entity/Q212805; http://www.wikidata.org/entity/Q1250322",
+            "TRUE"
         ],
         [
             "Teaching and Research with Digital Collections - Part 2 (2023)",
@@ -228,7 +231,8 @@
             "International Image Interoperability Framework, digital library, digital image",
             "<iframe width=\"562\" height=\"382\" src=\"https://www.youtube.com/embed/_xOnkUfSpM8\" title=\"Teaching &amp; Research w/ Digital Collections (Part 2)\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" allowfullscreen></iframe>",
             "International Image Interoperability Framework, digital library, digital image",
-            "http://www.wikidata.org/entity/Q22682088; http://www.wikidata.org/entity/Q212805; http://www.wikidata.org/entity/Q1250322"
+            "http://www.wikidata.org/entity/Q22682088; http://www.wikidata.org/entity/Q212805; http://www.wikidata.org/entity/Q1250322",
+            "TRUE"
         ],
         [
             "Teaching and Research with Digital Collections - Part 3 (2023)",
