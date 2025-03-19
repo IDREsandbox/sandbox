@@ -56,10 +56,13 @@ function init(){
 		document.querySelector('.search').insertAdjacentHTML('afterend',` <a href="?"><span class="tag tag-filter">${tag} x</span></a>`);
 
 	} else {
-		data[section].forEach(function(row) {
-			addGalleryItem(row,counter);
+
+		let shuffledData = data[section].sort(() => Math.random() - 0.5);
+		shuffledData.forEach(function(row) {
+			addGalleryItem(row, counter);
 			counter++;
 		});
+
 	}
 
 	// create the search function
