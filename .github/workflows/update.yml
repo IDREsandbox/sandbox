@@ -1,0 +1,26 @@
+name: Update sheets_data.json on Repository Update
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  update-file:
+    if: ${{ !contains(github.event.head_commit.message, '[skip ci]') }}
+    runs-on: self-hosted
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Run update script
+        run: cd site/js/ && python getdata.py
+
+      - name: Commit changes
+        run: |
+          git config user.name "koko"
+          git config user.email "koko@collie.idre.ucla.edu"
+          git add site/js/sheets_data.json
+          # Only commit if there are changes.
+          git diff-index --quiet HEAD || git commit -m "[skip ci] Automatic update"
+          git push
