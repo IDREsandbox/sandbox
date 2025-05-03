@@ -46,16 +46,124 @@ fetch(`${baseUrl}js/sheets_data.json`)
 		if (!response.ok) {
 			throw new Error(`HTTP error! Status: ${response.status}`);
 		}
-		return response.json();
+		return response.text();
+	})
+	.then(text => {
+		try {
+			// More thorough comment removal (handles both line and block comments)
+			// First remove block comments
+			let cleanedText = text.replace(/\/\*[\s\S]*?\*\//g, '');
+			// Then remove line comments (but not within string literals)
+			let inString = false;
+			let quoteChar = '';
+			let result = '';
+			
+			for (let i = 0; i < cleanedText.length; i++) {
+				const char = cleanedText[i];
+				const nextChar = cleanedText[i + 1] || '';
+				
+				// Handle string literals
+				if ((char === '"' || char === "'") && (i === 0 || cleanedText[i - 1] !== '\\')) {
+					if (!inString) {
+						inString = true;
+						quoteChar = char;
+					} else if (char === quoteChar) {
+						inString = false;
+					}
+				}
+				
+				// Handle line comments
+				if (!inString && char === '/' && nextChar === '/') {
+					// Skip until end of line
+					while (i < cleanedText.length && cleanedText[i] !== '\n') {
+						i++;
+					}
+					continue;
+				}
+				
+				result += char;
+			}
+			
+			// Try to parse the cleaned JSON
+			console.log('Attempting to parse JSON...');
+			return JSON.parse(result);
+		} catch (e) {
+			console.error('JSON parsing error:', e);
+			console.log('Problematic JSON text (first 500 chars):', text.substring(0, 500));
+			
+			// Try a simpler parsing approach as a fallback
+			console.log('Attempting fallback parsing method...');
+			try {
+				// Simple regex to remove comments
+				const simpleClean = text.replace(/\/\/.*$/gm, '').replace(/\/\*[\s\S]*?\*\//g, '');
+				return JSON.parse(simpleClean);
+			} catch (fallbackError) {
+				console.error('Fallback parsing also failed:', fallbackError);
+				throw new Error('Failed to parse JSON data. See console for details.');
+			}
+		}
 	})
 	.then(gdata => {
 		// for each sheetname in SheetNames, add the data as an object to the data object
 		sheetNames.forEach(sheetName => {
-			data[sheetName] = gdata[sheetName];
+			// Get all entries
+			const allEntries = gdata[sheetName];
+			
+			if (allEntries && allEntries.length > 0) {
+					// The first row contains headers
+					const headers = allEntries[0];
+					
+					// Find the index of the "show" column (case insensitive)
+					let showColumnIndex = -1;
+					if (headers) {
+						showColumnIndex = headers.findIndex(header => 
+							header && String(header).toLowerCase().includes('show'));
+					}
+					
+					// For backward compatibility, keep the old structure
+					// Filter entries where "show" is not "FALSE"
+					let filteredEntries;
+					if (showColumnIndex !== -1) {
+						filteredEntries = allEntries.slice(1).filter(row => {
+							if (!row || row.length <= showColumnIndex) return true;
+							return !(row[showColumnIndex] === "FALSE" || row[showColumnIndex] === false);
+						});
+					} else {
+						filteredEntries = allEntries.slice(1);
+					}
+					
+					// Store data in both the new and old format for maximum compatibility
+					data[sheetName] = filteredEntries;
+					data[sheetName].values = filteredEntries;
+					data[sheetName].headers = headers;
+					
+					// console.log(`Processed ${sheetName}: ${filteredEntries.length entries after filtering`);
+				} else {
+					// Handle empty sheets
+					data[sheetName] = [];
+					data[sheetName].values = [];
+					data[sheetName].headers = [];
+				}
+			});
+			
+			console.log('Successfully processed data:', data);
+			// Dispatch the dataLoaded event
+			document.dispatchEvent(new Event('dataLoaded'));
+			// Call init function
+			if (typeof init === 'function') {
+				init();
+			} else {
+				console.warn('No init function found to call after data loading');
+			}
+		})
+		.catch(error => {
+			console.error('Error fetching or processing data:', error);
+			// Add an on-screen error message for better user feedback
+			const errorMsg = document.createElement('div');
+			errorMsg.style.cssText = 'position:fixed;top:10px;left:10px;background:red;color:white;padding:10px;z-index:9999;';
+			errorMsg.textContent = `Error loading data: ${error.message}`;
+			document.body.appendChild(errorMsg);
 		});
-		console.log('Successfully fetched data:', data);
-		init();
-	})
 
 // --------------------------------	//
 //                            		//
@@ -71,20 +179,16 @@ if(urlParams.has('gamified')) {
 // Add gallery item								//
 // -------------------------------------------- //
 function addGalleryItem(row,counter,selector) {
-
 	// create a container for the gallery item and gallery tags
 	let galleryContainer = document.createElement('div');
 	galleryContainer.className = 'gallery-container';
-
-	// --------------------------------	//
-	// gallery item						//
-	// -------------------------------- //
+	
+	// gallery item
 	let galleryItem = document.createElement('div');
 	galleryItem.className = 'gallery-item';
-
+	
 	// link
 	let link = document.createElement('a');
-
 	// sometimes, link name is different from the section name...
 	if (section == 'consult') {
 		link.href = 'who/?id='+counter;
@@ -101,15 +205,12 @@ function addGalleryItem(row,counter,selector) {
 	// if row[4] is undefined, use the default image
 	if (row[4] == undefined || row[4] == '') {
 		image_file = 'sandbox.png';
-	}
-	else {
+	} else {
 		image_file = row[4];
 	}
-
 	let img = document.createElement('img');
 	img.src = '../'+section+'/images/'+image_file; 
 	img.alt = row[1]; 
-
 	// if section is consult, don't add section to the path
 	if (section == 'consult') {
 		img.src = '../images/'+image_file;
@@ -119,7 +220,7 @@ function addGalleryItem(row,counter,selector) {
 	let caption = document.createElement('div');
 	caption.className = 'caption';
 	caption.innerHTML = row[0]+'<br>'+row[1]; 
-	
+
 	// hover effect
 	img.style.filter = "grayscale(100%)";
 	img.onmouseover = function() {
@@ -138,14 +239,13 @@ function addGalleryItem(row,counter,selector) {
 	// append elements
 	link.appendChild(img);
 	link.appendChild(caption);
-
 	// add alt tags
 	img.alt = row[0] + ' - ' + row[1];
 	img.title = row[0] + ' - ' + row[1];
 	galleryItem.appendChild(link);
-
 	// append elements
 	galleryContainer.appendChild(galleryItem);
+	// append elements
 
 	// --------------------------------	//
 	// tags								//
@@ -155,7 +255,6 @@ function addGalleryItem(row,counter,selector) {
 		let tagList = tags.split(','); // Split the tags by comma
 		let tagContainer = document.createElement('div');
 		tagContainer.className = 'tag-container';
-
 		tagList.forEach(function(tag) {
 			let tagItem = document.createElement('span');
 			tagItem.className = 'tag';
@@ -171,7 +270,6 @@ function addGalleryItem(row,counter,selector) {
 			tagItem.style.cursor = "pointer";
 			tagContainer.appendChild(tagItem);
 		});
-
 		// galleryItem.appendChild(tagContainer);
 		galleryContainer.appendChild(tagContainer);
 	}
@@ -179,8 +277,7 @@ function addGalleryItem(row,counter,selector) {
 	// if selector argument is provided, append to the selector, otherwise, append to the gallery
 	if (selector) {
 		document.querySelector(selector).appendChild(galleryContainer);
-	}
-	else {
+	} else {
 		document.querySelector('.gallery').appendChild(galleryContainer);
 	}
 }
@@ -196,19 +293,16 @@ function createTagDiv(tag) {
 	// if tag count is 1, make the width and height 50px, for every additional tag, multiply by 1.5
 	tagItem.style.width = 80 + (tag_count-1)*40 + 'px';
 	tagItem.style.height = 80 + (tag_count-1)*40 + 'px';
-	
 	// if tag count is 1, make the font size 6px, for every additional tag, multiply by 1.5
 	tagItem.style.fontSize = 10 + (tag_count-1)*4 + 'px';
 	if (tag_count > 1) {
 		tagItem.textContent = tag + ' (' + tag_count + ')';
-	}
-	else {
+	} else {
 		tagItem.textContent = tag;
 	}
 	// tagItem.textContent = tag;
 	tagItem.onclick = function() {
 		// get the current url, and go to the work page (one folder up) with the tag parameter
-		// get the current url
 		currentUrl = window.location.href;
 		// find the work page
 		workIndex = currentUrl.indexOf('/'+section+'/');
@@ -252,7 +346,6 @@ function syntaxHighlightCode() {
 	console.log('Syntax highlighting code blocks...');
 	// Get all <code> blocks
 	const codeBlocks = document.querySelectorAll('pre code');
-
 	codeBlocks.forEach(block => {
 	  let code = block.innerHTML;
 
@@ -292,8 +385,8 @@ function highlightJS(code) {
 
 	// Handle regular strings (single and double quotes)
 	code = code.replace(/(["'])(.*?)\1/g, (match) => {
-	placeholders.push(match);
-	return `__STRING_PLACEHOLDER_${placeholders.length - 1}__`;
+		placeholders.push(match);
+		return `__STRING_PLACEHOLDER_${placeholders.length - 1}__`;
 	});
 
 	// Step 2: Tokenize the code, ensuring comments and lists are handled correctly
@@ -301,34 +394,34 @@ function highlightJS(code) {
 
 	// Step 3: Apply highlighting
 	let highlightedCode = tokens.map(token => {
-	// Restore strings from placeholders
-	if (token.startsWith("__STRING_PLACEHOLDER_")) {
-		const index = token.match(/\d+/)[0];
-		return `<span class="js-string">${placeholders[index]}</span>`;
-	}
+		// Restore strings from placeholders
+		if (token.startsWith("__STRING_PLACEHOLDER_")) {
+			const index = token.match(/\d+/)[0];
+			return `<span class="js-string">${placeholders[index]}</span>`;
+		}
 
-	// Check for comments (// comment)
-	if (/^\/\/.*$/.test(token)) {
-		return `<span class="js-comment">${token}</span>`;
-	}
+		// Check for comments (// comment)
+		if (/^\/\/.*$/.test(token)) {
+			return `<span class="js-comment">${token}</span>`;
+		}
 
-	// Check for keywords
-	if (/\b(let|const|var|if|else|for|while|return|function|class|import|from|export|this|new|try|catch|throw|async|await)\b/.test(token)) {
-		return `<span class="js-keyword">${token}</span>`;
-	}
+		// Check for keywords
+		if (/\b(let|const|var|if|else|for|while|return|function|class|import|from|export|this|new|try|catch|throw|async|await)\b/.test(token)) {
+			return `<span class="js-keyword">${token}</span>`;
+		}
 
-	// Check for numbers
-	if (/^\d+(\.\d+)?$/.test(token)) { // Allow for integers and floats
-		return `<span class="js-number">${token}</span>`;
-	}
+		// Check for numbers
+		if (/^\d+(\.\d+)?$/.test(token)) { // Allow for integers and floats
+			return `<span class="js-number">${token}</span>`;
+		}
 
-	// Check for operators
-	if (/(\+|\-|\*|\/|\=|\+=|\-=|\*=|\/=|===|==|!=)/.test(token)) {
-		return `<span class="js-operator">${token}</span>`;
-	}
+		// Check for operators
+		if (/(\+|\-|\*|\/|\=|\+=|\-=|\*=|\/=|===|==|!=)/.test(token)) {
+			return `<span class="js-operator">${token}</span>`;
+		}
 
-	// Return token as-is if no match
-	return token;
+		// Return token as-is if no match
+		return token;
 	}).join('');
 
 	return highlightedCode;
@@ -352,28 +445,28 @@ function highlightPython(code) {
 	let highlightedCode = tokens.map(token => {
 		// Restore strings from placeholders
 		if (token.startsWith("__STRING_PLACEHOLDER_")) {
-		const index = token.match(/\d+/)[0];
-		return `<span class="py-string">${placeholders[index]}</span>`;
+			const index = token.match(/\d+/)[0];
+			return `<span class="py-string">${placeholders[index]}</span>`;
 		}
 
 		// Check for comments (# comment)
 		if (/^#.*$/.test(token)) {
-		return `<span class="py-comment">${token}</span>`;
+			return `<span class="py-comment">${token}</span>`;
 		}
 
 		// Check for keywords
 		if (/\b(def|class|if|elif|else|for|while|return|import|from|as|try|except|with|pass|break|continue|True|False|None)\b/.test(token)) {
-		return `<span class="py-keyword">${token}</span>`;
+			return `<span class="py-keyword">${token}</span>`;
 		}
 
 		// Check for numbers
 		if (/^\d+(\.\d+)?$/.test(token)) { // Allow for integers and floats
-		return `<span class="py-number">${token}</span>`;
+			return `<span class="py-number">${token}</span>`;
 		}
 
 		// Check for operators
 		if (/(\+|\-|\*|\/|\=|\+=|\-=|\*=|\/=|===|==|!=)/.test(token)) {
-		return `<span class="py-operator">${token}</span>`;
+			return `<span class="py-operator">${token}</span>`;
 		}
 
 		// Return token as-is if no match

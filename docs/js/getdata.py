@@ -19,10 +19,10 @@ def fetch_data(sheet_name):
         response.raise_for_status()  # Raise HTTPError for bad responses
         json_data = response.json()
 
-        # Remove the first row (headers)
+        # Include the first row (headers) in the returned data
         if 'values' in json_data:
-            json_data['values'].pop(0)
-        return json_data
+            return json_data
+        return None
     except requests.exceptions.RequestException as e:
         print(f"Error fetching data for sheet {sheet_name}: {e}")
         return None

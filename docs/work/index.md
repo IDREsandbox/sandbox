@@ -58,10 +58,24 @@ function init(){
 
 	} else {
 
-		data[section].sort(() => Math.random() - 0.5).forEach(function(row) {
-			addGalleryItem(row,counter);
+		// data[section].sort(() => Math.random() - 0.5).forEach(function(row) {
+		// 	addGalleryItem(row,counter);
+		// 	counter++;
+		// });
+
+		// Note the original index of the data before shuffling
+		let indexedData = data[section].map((row, index) => ({ row, originalIndex: index }));
+
+		// Shuffle the data
+		let shuffledData = indexedData.sort(() => Math.random() - 0.5);
+
+		// Add gallery items with the original index
+		shuffledData.forEach(function(item) {
+			addGalleryItem(item.row, item.originalIndex);
 			counter++;
 		});
+
+
 
 	}
 

@@ -11,7 +11,7 @@ description: "Access a comprehensive library of workshops and tutorials from UCL
 </p>
 
 <!-- add a search box -->
-<input type="text" id="search" class="search" onkeyup="search()" placeholder="Search projects.." tabindex="0">
+<input type="text" id="search" class="search" onkeyup="search()" placeholder="Search projects...." tabindex="0">
 
 <!-- two buttons to toggle between gallery view and tag view -->
 <span class="btn btn-on" tabindex="0" alt="gallery view" title="gallery view">
@@ -34,6 +34,7 @@ description: "Access a comprehensive library of workshops and tutorials from UCL
 let section = 'learn'
 
 function init(){
+	console.log('here')
 	console.log(data)
 	// --------------------------------	//
 	// Loop through project data		//
@@ -57,9 +58,15 @@ function init(){
 
 	} else {
 
-		let shuffledData = data[section].sort(() => Math.random() - 0.5);
-		shuffledData.forEach(function(row) {
-			addGalleryItem(row, counter);
+		// Note the original index of the data before shuffling
+		let indexedData = data[section].map((row, index) => ({ row, originalIndex: index }));
+
+		// Shuffle the data
+		let shuffledData = indexedData.sort(() => Math.random() - 0.5);
+
+		// Add gallery items with the original index
+		shuffledData.forEach(function(item) {
+			addGalleryItem(item.row, item.originalIndex);
 			counter++;
 		});
 

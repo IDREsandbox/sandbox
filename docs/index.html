@@ -40,7 +40,7 @@
 			left: 0;
 			width: 100%;
 			height: 100%;
-			background-color: rgba(0, 0, 0, 0.6); /* Adjust the opacity as needed */
+			background-color: rgba(0, 0, 0, 0.7); /* Adjust the opacity as needed */
 			z-index: 1;
 		}
 
@@ -55,29 +55,25 @@
 			flex-direction: column;
 			justify-content: center;
 			align-items: flex-end;
-			padding: 50px;
+			padding: 20px;
 			box-sizing: border-box;
 		}
 		.site-logo {
-			/* margin-top: 20px; */
-
+			margin-top: 20px;
 		}
 		.tagline {
 			font-weight: bold;
-			font-size: 3rem;
+			font-size: 2rem;
 			color: white;
 			text-align: right;
 			text-shadow: 1px 1px 2px black;
 			text-align: right;
-			line-height: 1.5; /* Add this line to increase line spacing */
 		}
 		.paragraph {
 			color: white;
 			text-align: right;
-			max-width: 450px;
+			max-width: 300px;
 			text-shadow: 1px 1px 2px black;
-			margin-left: auto; /* Add this line to push paragraph to the right */
-			line-height: 1.5; /* Add this line to increase line spacing */
 		}
 		.links {
 			margin-top: 20px;
@@ -95,71 +91,59 @@
 		}
 
 	</style>
-	<script src="js/prism.js"></script>
 	<script src="js/getdata.js"></script>
 	<script>
 
 		function init() {
-
-				console.log('generating random background image');
-				let images = [];
-
-				if (data.work && data.work && data.work.length > 0) {
-					images = images.concat(data.work.map(row => ({ src: row[4], type: 'work' })));
-				}
-
-				if (data.learn && data.learn && data.learn.length > 0) {
-					images = images.concat(data.learn.map(row => ({ src: row[4], type: 'learn' })));
-				}
-
-				images = images.filter(image => image.src); // Remove any undefined or empty values
-
-				if (images.length === 0) {
-					console.warn('No valid "work" or "learn" sheet data found.');
+			// Wait for data to load before setting a random work image as background
+			document.addEventListener('dataLoaded', function() {
+				console.log('Data loaded');
+				if (!data.work || !data.work.values || data.work.values.length === 0) {
+					console.warn('No valid "work" sheet data found.');
 					return;
 				}
-
-				// Filter out images that are not marked as "TRUE" in the "Show" column
-				images = images.filter(image => {
-					if (image.type === 'work') {
-						return data.work.some(row => row[4] === image.src && row[15] === "TRUE"); // Column K is index 10
-					} else if (image.type === 'learn') {
-						return data.learn.some(row => row[4] === image.src && row[10] === "TRUE"); // Column P is index 15
+				
+				// Get random index from the values array (which now excludes the header row)
+				let randomIndex = Math.floor(Math.random() * data.work.values.length);
+				
+				// Find the image column index from headers
+				let imageColumnIndex = 4; // Default to index 4 if headers aren't available
+				if (data.work.headers) {
+					const imageHeader = data.work.headers.findIndex(header => 
+						String(header).toLowerCase().includes('image'));
+					if (imageHeader !== -1) {
+						imageColumnIndex = imageHeader;
 					}
-					return false;
-				});
-
-				let randomIndex = Math.floor(Math.random() * images.length);
-				let image = images[randomIndex];
-				let imageUrl = (image.type === 'work' ? 'work/images/' : 'learn/images/') + image.src;
+				}
+				
+				let image = data.work.values[randomIndex][imageColumnIndex] || 'sandbox.png';
+				console.log('Using image:', image);
 				document.getElementById('bgContainer').style.backgroundImage = 
-					'url("' + imageUrl + '")';
+					'url("work/images/' + image + '")';
+			});
 		}
 	</script>
 
 </head>
 <body>
 	<div id="bgContainer" class="body-background">
-		<div class="page-content" >
+		<div class="page-content">
 			<div class="site-logo">
 				<!-- Replace with actual logo image if available -->
-				<!-- <img src="logo.png" alt="UCLA Advanced Research Computing GIS and Visualization Logo" title="UCLA Advanced Research Computing GIS and Visualization Logo" height="50" tabindex="0"> -->
-				<img src="images/OARC Logos/SVG/Bxd_Wht_AdvRsrchComp_B.svg" alt="UCLA Advanced Research Computing GIS and Visualization Logo" title="UCLA Advanced Research Computing GIS and Visualization Logo" height="120" tabindex="0">
-				<!-- <img src="logo-no-border.png" alt="UCLA Advanced Research Computing GIS and Visualization Logo" title="UCLA Advanced Research Computing GIS and Visualization Logo" height="50" tabindex="0"> -->
-				<br>
-				<br>
+				<img src="logo.png" alt="Site Logo" height="50">
 			</div>
 			<div>
-				<div class="tagline" tabindex="0">Bringing your research to life</div>
-				<p class="paragraph" tabindex="0">
-					The Technology Sandbox is a hub for collaboration, innovation, and solutions centered on cutting-edge tools and techniques. Enrich your research with interactive workshops, hands-on experimentation, and guidance from our team of academic data scientists proficient in a wide range of advanced technologies.
+				<div class="tagline">Bringing your research to life</div>
+				<p class="paragraph">
+					Explore new ideas with interactive workshops, hands-on experimentation, 
+					and expert support in our Technology Sandbox.
 				</p>
 			</div>
-			<div class="links" tabindex="0">
-				<a href="learn/" tabindex="0">Learn</a>
-				<a href="work/" tabindex="0">Work</a>
-				<a href="musings/" tabindex="0">Muse</a>
-				<a href="consult/" tabindex="0">Consult</a>
+			<div class="links">
+				<a href="learn/">Learn</a>
+				<a href="work/">Work</a>
+				<a href="musings/">Musings</a>
+				<a href="consult/">Consult</a>
 			</div>
 		</div>
 	</div>
