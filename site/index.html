@@ -58,12 +58,12 @@
 			padding: 20px;
 			box-sizing: border-box;
 		}
-		.site-logo {
-			margin-top: 20px;
+		.site-logo-splash {
+			margin-bottom: 20px;
 		}
 		.tagline {
 			font-weight: bold;
-			font-size: 2rem;
+			font-size: 4rem;
 			color: white;
 			text-align: right;
 			text-shadow: 1px 1px 2px black;
@@ -72,7 +72,8 @@
 		.paragraph {
 			color: white;
 			text-align: right;
-			max-width: 300px;
+			max-width: 350px;
+			line-height: 1.6;
 			text-shadow: 1px 1px 2px black;
 		}
 		.links {
@@ -95,31 +96,42 @@
 	<script>
 
 		function init() {
-			// Wait for data to load before setting a random work image as background
+			console.log('Initializing.......');
+			// Wait for dataLoaded event before setting a splash background image
 			document.addEventListener('dataLoaded', function() {
 				console.log('Data loaded');
-				if (!data.work || !data.work.values || data.work.values.length === 0) {
-					console.warn('No valid "work" sheet data found.');
-					return;
-				}
-				
-				// Get random index from the values array (which now excludes the header row)
-				let randomIndex = Math.floor(Math.random() * data.work.values.length);
-				
-				// Find the image column index from headers
-				let imageColumnIndex = 4; // Default to index 4 if headers aren't available
-				if (data.work.headers) {
-					const imageHeader = data.work.headers.findIndex(header => 
-						String(header).toLowerCase().includes('image'));
-					if (imageHeader !== -1) {
-						imageColumnIndex = imageHeader;
+				let splashableEntries = [];
+				// For sheets "work" and "learn", combine splashable entries
+				['work', 'learn'].forEach(sheet => {
+					if (data[sheet] && data[sheet].values && data[sheet].headers) {
+						let headers = data[sheet].headers;
+						// Get column indexes for splashable and image
+						let splashIndex = headers.findIndex(header => String(header).toLowerCase().includes('splashable'));
+						let imageIndex = headers.findIndex(header => String(header).toLowerCase().includes('image'));
+						if (imageIndex === -1) { imageIndex = 4; }
+						// Iterate over values from this sheet
+						data[sheet].values.forEach(row => {
+							if (splashIndex !== -1 && (row[splashIndex] === "TRUE" || row[splashIndex] === true)) {
+								splashableEntries.push({
+									sheet: sheet,
+									image: row[imageIndex] || 'sandbox.png'
+								});
+							}
+						});
 					}
-				}
+				});
 				
-				let image = data.work.values[randomIndex][imageColumnIndex] || 'sandbox.png';
-				console.log('Using image:', image);
-				document.getElementById('bgContainer').style.backgroundImage = 
-					'url("work/images/' + image + '")';
+				// Choose a random splashable image from the combined pool; default to work/sandbox.png if none found
+				let chosen;
+				if (splashableEntries.length > 0) {
+					chosen = splashableEntries[Math.floor(Math.random() * splashableEntries.length)];
+				} else {
+					chosen = { sheet: 'work', image: 'sandbox.png' };
+				}
+				console.log('Using image:', chosen.image, 'from sheet:', chosen.sheet);
+				// Set background image using the baseUrl, sheet folder and chosen image
+				document.getElementById('bgContainer').style.backgroundImage =
+					'url("' + chosen.sheet + '/images/' + chosen.image + '")';
 			});
 		}
 	</script>
@@ -128,16 +140,19 @@
 <body>
 	<div id="bgContainer" class="body-background">
 		<div class="page-content">
-			<div class="site-logo">
+			<div class="site-logo-splash">
 				<!-- Replace with actual logo image if available -->
-				<img src="logo.png" alt="Site Logo" height="50">
+				<img src="logo-splash.png" alt="Site Logo" height="50">
 			</div>
 			<div>
 				<div class="tagline">Bringing your research to life</div>
+			</div>
+			<div>
 				<p class="paragraph">
 					Explore new ideas with interactive workshops, hands-on experimentation, 
 					and expert support in our Technology Sandbox.
 				</p>
+
 			</div>
 			<div class="links">
 				<a href="learn/">Learn</a>

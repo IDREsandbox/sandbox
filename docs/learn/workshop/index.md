@@ -2,7 +2,6 @@
 <span id="secondary-title"></span>
 <div id="workshop-container"></div>
 
-
 <script>
 	
 // ---------------------------- //
@@ -88,9 +87,10 @@ function createWorkshop(id) {
 
 	// add the workshop to the page
 	document.getElementById('workshop-container').appendChild(workshopDiv);
-
-
-
-	
 }
+
+// Ensure init is called after data is loaded
+document.addEventListener('dataLoaded', function() {
+	init();
+});
 </script>
