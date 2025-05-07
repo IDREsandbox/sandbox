@@ -90,7 +90,7 @@ function createWorkshop(id) {
 }
 
 // Ensure init is called after data is loaded
-document.addEventListener('dataLoaded', function() {
-	init();
-});
+// document.addEventListener('dataLoaded', function() {
+// 	init();
+// });
 </script>
